@@ -2,23 +2,25 @@
 package main
 
 import( 
+	"fmt"
 	"github.com/gofiber/fiber/v2"
-	"github.com/jinzhu/gorm"
-    "github.com/denisenkom/go-mssqldb"
+	"gorm.io/driver/sqlserver"
+	"gorm.io/gorm"
 )
 
-func main(){
-	dbString := "sqlserver://ADANOS\\aalsa@Adanos\\SQLEXPRESS?database=Go_auth"
-	_, err := gorm.Open("mssql", dbString)
+func main() {
+	dsn :=  "server=localhost;database=Go_auth;integrated security=SSPI;"
+	_, err := gorm.Open(sqlserver.Open(dsn), &gorm.Config{})
+
 	if err != nil {
-        panic("could not connect to database")
+		fmt.Println("Error:", err)
+		panic("could not connect to the database")
 	}
 
-
 	app := fiber.New()
-	app.Get("/", func(c*fiber.Ctx) error{
-		return c.SendString("the world")
+	app.Get("/", func(c *fiber.Ctx) error {
+		return c.SendString("Hello, world!")
 	})
 
-	app.Listen("8000")
+	app.Listen(":8000")
 }
