@@ -1,5 +1,6 @@
 
-connect sql server to go  ( useing sql server extension)
 go get -u github.com/jinzhu/gorm
 go get -u github.com/denisenkom/go-mssqldb
+
+docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres
 

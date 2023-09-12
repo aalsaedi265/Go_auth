@@ -31,11 +31,13 @@ func makeHTTPHandleFunc(f apiFunc) http.HandlerFunc {
 
 type APIServer struct {
 	listenAddr string
+	store Storage
 }
 
-func NewAPIServer(listenAddr string) *APIServer {
+func NewAPIServer(listenAddr string, store Storage) *APIServer {
 	return &APIServer{
 		listenAddr: listenAddr,
+		store: store,
 	}
 }
 
@@ -65,7 +67,7 @@ func(s *APIServer)handleAccount( w http.ResponseWriter, r *http.Request) error{
 }
 
 func(s *APIServer)handleGetAccount( w http.ResponseWriter, r *http.Request) error{
-	
+
 	account := NewAccount("Funny,", "Valintine")
 
 	return WriteJson(w, http.StatusOK, account)
